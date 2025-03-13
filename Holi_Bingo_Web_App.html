@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Holi Bingo</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        .bingo-card { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; max-width: 400px; margin: 20px auto; }
+        .bingo-cell { padding: 15px; border: 2px solid #000; cursor: pointer; }
+        .crossed { background-color: lightgray; text-decoration: line-through; }
+        .submit-btn { margin-top: 20px; padding: 10px 20px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Holi Themed Bingo</h1>
+    <div class="bingo-card" id="bingoCard"></div>
+    <button class="submit-btn" onclick="submitCard()">Submit for Review</button>
+    
+    <script>
+        const words = ["Gulal", "Pichkari", "Thandai", "Gujiya", "Rangoli", "Water Balloons", "Bhang", "Dhol", "Bonfire", "Holi Hai!", "Rainbow", "Drenched", "Colors", "Abir", "Masti", "Lassi", "Festival", "Friendship", "Dance", "Puran Poli", "Sweets", "Celebration", "Floral Rain", "Holi Song", "Folk Dance"];
+        words.sort(() => Math.random() - 0.5); // Shuffle words
+        
+        function generateBingoCard() {
+            const card = document.getElementById("bingoCard");
+            words.slice(0, 25).forEach(word => {
+                let cell = document.createElement("div");
+                cell.classList.add("bingo-cell");
+                cell.innerText = word;
+                cell.onclick = () => cell.classList.toggle("crossed");
+                card.appendChild(cell);
+            });
+        }
+        
+        function submitCard() {
+            const markedWords = Array.from(document.querySelectorAll(".bingo-cell.crossed")).map(cell => cell.innerText);
+            alert("Bingo card submitted! Words marked: " + markedWords.join(", "));
+            // Here, we can implement sending data to a Google Sheet or backend
+        }
+        
+        generateBingoCard();
+    </script>
+</body>
+</html>
